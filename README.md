@@ -16,8 +16,7 @@ To use:
 ```bash
 ./manage.py syncdb
 ```
-
-4. To run, first start celery in one terminal with:
+To run, first start celery in one terminal with:
 ```bash
 ./manage.py celery worker --loglevel=info
 ```
