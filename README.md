@@ -15,7 +15,7 @@ To use:
 3. Before running app for the first time, initialize the database with:
 ```bash
 ./manage.py syncdb
-```  
+```
 4. To run, first start celery in one terminal with:
 ```bash
 ./manage.py celery worker --loglevel=info
