@@ -22,6 +22,6 @@ To run, first start celery in one terminal with:
 ```
 Then in a second terminal, start the django server with:
 ```bash
-./manage.py celery worker --loglevel=info
+./manage.py runserver
 ```
 
