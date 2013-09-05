@@ -12,7 +12,11 @@ To use:
 1. Install the dependencies in a virtual environment:  django, pyechonest, numpy, remix, and celery.  
 2. Add a file named 'secrets.py' to the 'mixifier' directory.  In the file, define ECHO_NEST_API_KEY  
 ([your API key](http://developer.echonest.com/ "get an API key")), and DJANGO_SECRET_KEY (a random, unique string for your web app).  
-3.  To run, first start celery in one terminal with:
+3. Before running app for the first time, initialize the database with:
+```bash
+./manage.py syncdb
+```  
+4. To run, first start celery in one terminal with:
 ```bash
 ./manage.py celery worker --loglevel=info
 ```
