@@ -2,3 +2,19 @@
 *.pot
 *.pyc
 local_settings.py
+
+# temp files
+*~
+
+# music files
+*.mp3
+*.wav
+*.MP3
+*.WAV
+
+# keep keys here
+secrets.py
+
+# database
+*.db
+

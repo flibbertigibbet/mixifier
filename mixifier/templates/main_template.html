@@ -1,0 +1,104 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <style type="text/css">
+        #divGot, #divUse {float:left; width:500px;}
+        li.liGot {list-style-type:none;cursor:move;
+            box-shadow:inset 0 0 3px #000;border:2px solid #666666;
+            background-color:#ccc;font-size:larger;}
+        li.liUse {list-style-type:none;box-shadow:inset 0 0 3px #000;
+            border:2px solid #666666;background-color: #faf;font-size:larger;opacity:0.4;}
+        td.labels {font-size:larger}
+        #mixit { width:7em;height:3em;font-size:larger;font-weight:bold; }
+        th {font-size:x-large;}
+    </style>
+    <script>
+        var mixiness = 0.8;
+        
+        function makeMix() {
+            fileOne = use1.innerHTML;
+            fileTwo = use2.innerHTML;
+            
+            if ((fileOne == "drag file here") || (fileTwo == "drag file here")) {
+                console.log("Missing one or both files.");
+            } else {
+                console.log("TODO: make mix with mixiness " + mixiness + " for files " + 
+                    fileOne + " and " + fileTwo);
+                    
+                mixform.fileOne.value = fileOne;
+                mixform.fileTwo.value = fileTwo;
+                mixform.mixiness.value = mixiness;
+            }
+        }
+        
+        function allowDrop(ev){ ev.preventDefault(); }
+
+        function drag(ev) { 
+            ev.dataTransfer.setData("Text",ev.target.id);
+        }
+        
+        function doubleclick(ev) {
+            addToList(ev.target.id);
+        }
+
+        function drop(ev) { 
+            ev.preventDefault();
+            addToList(ev.dataTransfer.getData("Text"));
+         }
+         
+         function addToList(adding) {
+            elem = document.getElementById(adding);
+            elem.style.opacity = '0.4';
+            
+            if (use1.innerHTML != "drag file here" && use2.innerHTML != use1.innerHTML) {
+                document.getElementById(use1.innerHTML).style.opacity = '1';
+            } else if (use2.innerHTML != "drag file here") {
+                use1.style.opacity = '1';
+            }
+            
+            use1.innerHTML = use2.innerHTML;
+            use2.innerHTML = elem.innerHTML;
+            use2.style.opacity = '1';
+         }
+         
+         function showValue(val) {
+            mixiness = val;
+            var scaledVal = Math.round(val * 11);
+            document.getElementById("mixlabel").innerHTML="<h2>Mixiness: " + scaledVal + "</h2>";
+         }
+    </script>
+</head>
+
+<body>
+<table><th>Available Files</th><th>Selected for Mix</th>
+<tr><td align="center">Drag or double-click a file name to add it to the mix.</td><td /></tr>
+<tr><td><div id="divGot">
+    <ul id="ulGot">
+        {% for file in raw_list %}
+          <li class="liGot" draggable="true" ondragstart="drag(event)" 
+                ondblclick="doubleclick(event)" id={{file}} 
+                width="500" border="1px">{{ file }}</li>
+        {% endfor %}
+    </ul>
+</div></td>
+<td valign="top"><div id="divUse">
+    <form name="mixform">
+    <input type="hidden" name="fileOne" value=""/>
+    <input type="hidden" name="fileTwo" value=""/>
+    <table width="500"><tr><td colspan="3">
+    <ul id="ulUse" ondrop="drop(event)" ondragover="allowDrop(event)">
+        <li class="liUse" id="use1">drag file here</li>
+        <li class="liUse" id="use2">drag file here</li>
+    </ul></td></tr>
+    <tr><td align="center" colspan="3" id="mixlabel"><h2>Mixiness: 9</h2></td></tr><tr><td align="right" class="labels">1</td><td align="center" width="50">
+    <input type="range" id="mixiness" name="mixiness" min=".1" max="1" value="0.8" step="0.05" align="center" onchange="showValue(this.value)"/></td>
+    <td class="labels" align="left" width="180">11</td></tr>
+    <tr height="100" align="center"><td colspan="3"><p>Higher mixiness values result in more resynthesis.  Mine goes to 11!</p>
+        <p>Segments from the second track will be mixed to the first.  This demo provides a user interface to the afromb.py example for the Echo Nest Remix API.</p></td></tr>
+    <tr><td colspan="3" align="center"><input type="submit" name="mix" value="Mix it up!" id="mixit" onclick="makeMix()" formmethod="post" formaction=""/>{% csrf_token %}</td></tr>
+    </table>
+    </form>
+</div><td>
+</tr><table>
+</body>
+</html>
