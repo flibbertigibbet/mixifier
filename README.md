@@ -12,7 +12,8 @@ To use:
 1. Install the dependencies in a virtual environment:  django, pyechonest, numpy, remix, and celery.  
 2. Add a file named 'secrets.py' to the 'mixifier' directory.  In the file, define ECHO_NEST_API_KEY  
 ([your API key](http://developer.echonest.com/ "get an API key")), and DJANGO_SECRET_KEY (a random, unique string for your web app).  
-3. Before running app for the first time, initialize the database with:  
+3. Put the .mp3 files you want available for remixing into the mixifier/media directory.
+4. Before running app for the first time, initialize the database with:  
 ```bash
 ./manage.py syncdb
 ```
@@ -24,4 +25,3 @@ Then in a second terminal, start the django server with:
 ```bash
 ./manage.py runserver
 ```
-
